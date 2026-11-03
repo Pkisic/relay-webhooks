@@ -83,4 +83,4 @@ tests/             test suite
 
 ## License
 
-TBD
+Released under the [MIT License](LICENSE).
