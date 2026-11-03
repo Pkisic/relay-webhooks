@@ -7,7 +7,7 @@ UV_RUN := uv run --locked
 HOST ?= 127.0.0.1
 PORT ?= 8000
 
-.PHONY: help install dev lint format format-check typecheck test check build up down logs
+.PHONY: help install dev lint format format-check typecheck test check build up down logs image stack stack-watch
 
 # The quality gate must run its steps in order, even under `make -j`.
 .NOTPARALLEL:
@@ -55,8 +55,17 @@ check: lint format-check typecheck test ## Run the full quality gate (used by CI
 up: ## Start Postgres and Redis and wait until healthy
 	docker compose up -d --wait
 
-down: ## Stop services (data is kept)
-	docker compose down
+down: ## Stop all services (data is kept)
+	docker compose --profile app down
 
 logs: ## Follow service logs
 	docker compose logs -f
+
+image: ## Build the API image
+	docker build --pull -t relay-api .
+
+stack: ## Run API, Postgres and Redis in containers
+	docker compose --profile app up -d --build --wait
+
+stack-watch: ## Same, rebuilding the API when sources change
+	docker compose --profile app up --build --watch
