@@ -1,0 +1,30 @@
+# --- Python & Virtual Environments ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+build/
+
+# --- uv ---
+.uv/
+
+# --- env ---
+.env
+
+# --- Type Checking & Linting ---
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+dmypy.run
+
+# --- Testing & Coverage ---
+.pytest_cache/
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
