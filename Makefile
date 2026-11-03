@@ -7,7 +7,7 @@ UV_RUN := uv run --locked
 HOST ?= 127.0.0.1
 PORT ?= 8000
 
-.PHONY: help install dev lint format format-check typecheck test check build
+.PHONY: help install dev lint format format-check typecheck test check build up down logs
 
 # The quality gate must run its steps in order, even under `make -j`.
 .NOTPARALLEL:
@@ -49,3 +49,14 @@ test: ## Run the test suite
 	$(UV_RUN) pytest
 
 check: lint format-check typecheck test ## Run the full quality gate (used by CI)
+
+## Services
+
+up: ## Start Postgres and Redis and wait until healthy
+	docker compose up -d --wait
+
+down: ## Stop services (data is kept)
+	docker compose down
+
+logs: ## Follow service logs
+	docker compose logs -f
